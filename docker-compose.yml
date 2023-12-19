@@ -1,0 +1,31 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1181
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+
+  app:
+    build:
+      context: .
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 1181
+      DB_NAME: postgres
+    ports:
+      - "3000:3000"
+    networks:
+      - my-network
+
+networks:
+  my-network:
